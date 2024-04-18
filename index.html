@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will you be mine forever?</title>
+    <style>
+        body {
+            background-color: #ffc0cb; /* Light pink background */
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif; /* Default font */
+            position: relative; /* Make body a positioning context */
+        }
+        #hello-kitty {
+            width: 50%; /* Adjust the size of the image */
+            max-width: 300px;
+            height: auto;
+            margin: 50px auto; /* Center the image vertically and horizontally */
+            position: relative; /* Make hello kitty image a positioning context */
+            z-index: 1; /* Ensure hello kitty is above other elements */
+        }
+        #left-heart, #right-heart {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            height: calc(100% - 140px); /* Adjusted height from top of hello kitty to end of buttons */
+            width: auto;
+            z-index: 0; /* Ensure hearts are behind other elements */
+        }
+        #left-heart {
+            left: 0;
+            transform: scaleX(-1); /* Flip heart horizontally for left side */
+        }
+        #right-heart {
+            right: 0;
+        }
+        #message {
+            font-size: 48px; /* Larger font size */
+            margin-bottom: 30px; /* Increased margin */
+            font-family: 'Amatic SC', cursive; /* Cute font for the message */
+        }
+        #no-button, #yes-button {
+            font-size: 32px; /* Larger font size */
+            padding: 15px 30px; /* Increased padding */
+            margin: 0 20px;
+            cursor: pointer;
+            transition: transform 0.5s ease; /* Smooth transition for button movement */
+            font-family: 'Amatic SC', cursive; /* Cute font for the buttons */
+            background-color: #ffccff; /* Light pink background for buttons */
+            border: none;
+            border-radius: 30px; /* Rounded corners */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
+            color: #ff66b3; /* Pink text color */
+            z-index: 2; /* Ensure buttons are above other elements */
+        }
+        #no-button:hover, #yes-button:hover {
+            transform: translateY(-3px); /* Move buttons slightly up on hover */
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+        }
+        .popup {
+            background-color: #f7f0f0; /* Cute pastel background color */
+            border-radius: 20px; /* Rounded corners */
+            padding: 150px; /* Padding inside the popup */
+            width: 60%; /* Width of the popup */
+            max-width: 600px; /* Maximum width of the popup */
+            position: fixed; /* Fixed position */
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Center the popup */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
+            z-index: 3; /* Ensure popup is above other elements */
+        }
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 24px;
+        }
+        .popup-content {
+    font-family: 'Amatic SC', cursive; /* Use the same font as buttons */
+    font-size: 30px; /* Increase the font size */
+         }
+
+        @media (max-width: 768px) {
+            /* Adjustments for smaller screens */
+            #hello-kitty {
+                width: 80%;
+            }
+            #message {
+                font-size: 36px; /* Larger font size for smaller screens */
+            }
+            #no-button, #yes-button {
+                font-size: 24px; /* Larger font size for smaller screens */
+                padding: 12px 24px; /* Increased padding for smaller screens */
+            }
+            .popup {
+                width: 80%; /* Adjusted width for smaller screens */
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <img id="hello-kitty" src="hello-kitty-image.gif" alt="Hello Kitty">
+    <img id="left-heart" src="left-heart-image.png" alt="Heart" />
+    <img id="right-heart" src="right-heart-image.png" alt="Heart" />
+    <div id="message">
+        <p>Will you be mine forever?</p>
+        <button id="no-button" onclick="return false;">No</button>
+        <button id="yes-button" onclick="showPopup()">Yes</button>
+    </div>
+    <div id="popup" class="popup" style="display: none;">
+        <span class="close-button" onclick="closePopup()">X</span>
+        <p class="popup-content">HI BABYYY im writing this on the 18th of april rn at 10pm :33 I'm pretty much done making this little website for you to show you how much i really love you and adore you, im so happy we've been together for a month, it honestly feels like we've been together way longer.. but anyways ml, there isnt a single minute where you arent on my mind, you are the first and last thought that comes to my mind when i wake up and go to sleep. i adore every single part of you and i cant wait to show this to you when its finally time :3 ALSO I LOVE YOU TO THE MOON AND BACK :3</p>
+    </div>
+    <script>
+        const noButton = document.getElementById("no-button");
+        const moveDistance = 250; // Adjust the distance the button moves away from the mouse
+
+        document.addEventListener("mousemove", function(event) {
+            const buttonRect = noButton.getBoundingClientRect();
+            const buttonCenterX = buttonRect.left + buttonRect.width / 2;
+            const buttonCenterY = buttonRect.top + buttonRect.height / 2;
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+            const deltaX = mouseX - buttonCenterX;
+            const deltaY = mouseY - buttonCenterY;
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+            // Check if the mouse is within the specified distance from the button
+            if (distance < moveDistance) {
+                const moveX = -deltaX / distance * moveDistance;
+                const moveY = -deltaY / distance * moveDistance;
+                noButton.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            } else {
+                noButton.style.transform = "none"; // Reset button position if mouse is outside the area
+            }
+        });
+
+        function showPopup() {
+            document.getElementById("popup").style.display = "block";
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+    </script>
+</body>
+</html>
